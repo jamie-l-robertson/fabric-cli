@@ -1,13 +1,13 @@
 # fabric-cli
 CLI tool for Fabric
 
-##Installation##
+## Installation
 
 ``` javascript
 npm install -g fabric-cli
 ```
 
-##Usage##
+## Usage
 In the Fabric base directory, run:
 
 ``` javascript
@@ -15,6 +15,3 @@ fabric start - all other commands you had before work also i.e. prod, styles, sc
 ```
 
 This can also be ran in the build folder.
-
-
-

@@ -2,8 +2,6 @@
 
 'use strict';
 
-FORCE_COLOR = 1;
-
 const program = require('commander');
 const exec = require('child_process').exec;
 const chalk = require('chalk');

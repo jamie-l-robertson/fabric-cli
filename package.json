@@ -1,18 +1,23 @@
 {
   "name": "fabric-cli",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "A command line tool for fabric",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "Jamie Robertson",
-  "license": "Apache-2.0",
   "bin": {
     "fabric": "index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ru7hl355/fabric-cli"
   },
   "dependencies": {
     "chalk": "^1.1.3",
     "commander": "^2.9.0"
-  }
+  },
+  "keywords": [
+    "fabric",
+    "fabric cli"
+  ],
+  "license": "MIT"
 }
