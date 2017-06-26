@@ -4,8 +4,11 @@
 
 const program = require('commander');
 const exec = require('child_process').exec;
+const appRoot = require('app-root-path');
 const pkg = require('./package.json');
+const buildConfig = require(appRoot + '/config.json');
 const cmd = 'grunt';
+const fs = require('fs');
 
 function log(data) {
   data.stdout.on('data', function (data) {
@@ -29,7 +32,14 @@ function argument(task, path) {
     command = 'rm src/build; ln -s ' + path + ' src/build';
     exec(command);
 
-    buildInfo = require(path + 'package.json');
+    buildInfo = require(path + 'src/build/package.json');
+    buildConfig.projects.push({'name': buildInfo.name, 'path': path});
+
+    fs.writeFile(appRoot + '/config.json', JSON.stringify(buildConfig, null, 2), function (err) {
+      if (err) return console.log(err);
+      console.log('build added');
+    });
+
   }
 
   return command;
