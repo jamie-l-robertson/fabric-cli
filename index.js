@@ -9,7 +9,7 @@ const figlet = require('figlet');
 const chalk = require('chalk');
 const exec = require('child_process').exec;
 const prompt = inquirer.createPromptModule();
-const buildConfig = require(appRoot + '/config.json');
+const buildConfig = require(appRoot + '/fabric-config.json');
 
 const base_cmd = 'Connect base';
 const fabric_base_cmd = 'Connect Fabric';
@@ -42,14 +42,15 @@ function defaultTask(path) {
 
 function argument(task, name, path, fabricPath, basePath) {
   const config = readConfig();
-  const fabric = getFabric();
+  const fabric = buildConfig.fabricPath;
   let project;
   let command;
 
+
   if (task === connect_cmd) {
-    command = fabric + '; rm src/build; ln -s ' + config.basePath + path + ' src/build; grunt';
+    command = 'cd ' + fabric + '; rm src/build; ln -s ' + config.basePath + path + ' src/build; grunt';
     buildConfig.projects.push({ name: path, path: trailingSlash(config.basePath + path) });
-    fs.writeFile(appRoot + '/config.json', JSON.stringify(buildConfig, null, 2), err => {
+    fs.writeFile(appRoot + '/fabric-config.json', JSON.stringify(buildConfig, null, 2), err => {
       if (err) return console.log(err);
       console.log('Build stored!');
     });
@@ -63,8 +64,7 @@ function argument(task, name, path, fabricPath, basePath) {
 
   if (task === fabric_base_cmd) {
     buildConfig.fabricPath = trailingSlash(fabricPath);
-
-    fs.writeFile(appRoot + '/config.json', JSON.stringify(buildConfig, null, 2), err => {
+    fs.writeFile(appRoot + '/fabric-config.json', JSON.stringify(buildConfig, null, 2), err => {
       if (err) return console.log(err);
       console.log('Base path stored!');
     });
@@ -72,8 +72,7 @@ function argument(task, name, path, fabricPath, basePath) {
 
   if (task === base_cmd) {
     buildConfig.basePath = trailingSlash(basePath);
-
-    fs.writeFile(appRoot + '/config.json', JSON.stringify(buildConfig, null, 2), err => {
+    fs.writeFile(appRoot + '/fabric-config.json', JSON.stringify(buildConfig, null, 2), err => {
       if (err) return console.log(err);
       console.log('Base path stored!');
     });
@@ -84,7 +83,7 @@ function argument(task, name, path, fabricPath, basePath) {
 }
 
 function readConfig() {
-  return JSON.parse(fs.readFileSync(appRoot + '/config.json', 'utf8'));
+  return JSON.parse(fs.readFileSync(appRoot + '/fabric-config.json', 'utf8'));
 }
 
 function getBuilds() {
